@@ -2,26 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
+   
+    
+    public float speed = 30.0f;
 
     private Rigidbody playerRb;
-    public float speed = 350.0f;
-    // Start is called before the first frame update
+    private float movementX; 
+    private float movementY;
+
+    private float size = 10;
+
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        float HorizontalInput = Input.GetAxis("Horizontal");
-        float forwardInput = Input.GetAxis("Vertical");
+        //Get Input from keyboard or other devices
+        float movementX = Input.GetAxis("Horizontal");
+        float movementY = Input.GetAxis("Vertical");
 
-        playerRb.AddForce(transform.forward * speed * Time.deltaTime * forwardInput);
-        playerRb.AddForce(transform.right * speed * Time.deltaTime * HorizontalInput);
-
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+        playerRb.AddForce(movement * speed);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Prop") && collision.transform.localScale.magnitude <= size)
+        {
+            Debug.Log("OnCollisoinEnter");
+
+            collision.transform.parent = transform;
+            size += collision.transform.localScale.magnitude;
+        }
+    }
+    
 }
