@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
@@ -8,15 +7,15 @@ public class PlayerController : MonoBehaviour
    
 
     public float speed = 30.0f;
+    public float size = 1.0f;
 
-    private Rigidbody playerRb;
-    public float size = 10.0f;
+    private Rigidbody _playerRb;
 
     
 
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+        _playerRb = GetComponent<Rigidbody>();
         
 
     }
@@ -24,36 +23,44 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //Get Input from keyboard or other devices
-        float movementX = Input.GetAxis("Horizontal");
-        float movementY = Input.GetAxis("Vertical");
+        var movementX = Input.GetAxis("Horizontal");
+        var movementY = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        playerRb.AddForce(movement * speed, ForceMode.Acceleration);
+        var movement = new Vector3(movementX, 0.0f, movementY);
+        _playerRb.AddForce(movement * speed, ForceMode.Acceleration);
 
     
     }
 
     void OnTriggerEnter(Collider other)
     {
-    if(other.gameObject.CompareTag("Prop") && other.transform.localScale.magnitude <= size)
-        {
-        Debug.Log("OnTriggerEnter");
-
-        // Turning off the colliders of the props
-        Collider propCollider = other.gameObject.GetComponent<Collider>();
-        if(propCollider != null)
-        {
-            propCollider.enabled = false;
-        }
-
-        // Make the objects child of the ball/player 
-        other.transform.parent = transform;
-
-        // Changing the size to reflect the number of stuff collected
+        //checks tag
+        if(!other.gameObject.CompareTag("Prop")) return;
         
-        size += other.transform.localScale.magnitude;
-        }
+        //checks the actual size instead of the magnitude of the vector
+        float objectSize = Mathf.Max(other.transform.localScale.x, other.transform.localScale.y, other.transform.localScale.z);
+        
+        //checks if size is less than or equal
+        if (objectSize <= size)
+        {
+            Debug.Log("Player collision");
+            
+            var propCollider = other.gameObject.GetComponent<Collider>();
 
+            if (propCollider != null)
+            {
+                propCollider.enabled = false;
+            }
+            
+            //make child 
+            other.transform.parent = transform;
+            
+            //change size variable
+            size += objectSize;
+
+            transform.localScale *= 1.09f;
+
+        }
 
     }
 

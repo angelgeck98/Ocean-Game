@@ -357,6 +357,7 @@
 -analyzer:"Q:/Unity/2022.3.19f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"Q:/Unity/2022.3.19f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/Environment/CameraController.cs"
+"Assets/Scripts/Environment/PIckedUpObjects.cs"
 "Assets/Scripts/Environment/PlayerController.cs"
 "Assets/Scripts/Managers/ScenesManager.cs"
 "Assets/Scripts/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
@@ -393,6 +394,7 @@
 "Assets/Scripts/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/Scripts/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/Scripts/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+"Assets/Scripts/UI/SizeDisplayUI.cs"
 "Assets/Scripts/UI/UIPauseMenu.cs"
 "Assets/Scripts/UI/UIScriptMENU.cs"
 -langversion:9.0
